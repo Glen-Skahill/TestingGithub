@@ -15,23 +15,9 @@ Your progress lives in the app's local storage on that phone. Export a backup fr
 
 ## Hosting (GitHub Pages, free)
 
-This folder is a static site. In the repository: **Settings → Pages → Build and deployment → Source: Deploy from a branch**, then pick the branch and `/ (root)`. GitHub prints the URL a minute later.
+This repository is a static site. In **Settings → Pages → Build and deployment**, set Source to **Deploy from a branch**, pick `main` and `/ (root)`, and save. A minute later the site is at `https://glen-skahill.github.io/walk-in-light/`.
 
 Public repositories get GitHub Pages for free. A private repository needs a paid plan for Pages, so keep the repo public (there is nothing private in the code; your data never leaves the phone).
-
-### Moving this into its own repository
-
-Everything the app needs is in this folder tree. To give it its own home:
-
-```
-git clone <this repo> && cd <this repo>
-git checkout claude/walk-in-light-app-gr3i7l
-# create an empty public repo called walk-in-light on GitHub, then:
-git remote add wil https://github.com/<you>/walk-in-light.git
-git push wil claude/walk-in-light-app-gr3i7l:main
-```
-
-Then enable Pages on the new repo as above.
 
 ## What is inside
 
@@ -60,6 +46,12 @@ Every task has a size (S 15 min, M 45, L 90+), a short "How", a list of **tiny s
 ## Updating content later
 
 Edit `js/seed.js`, bump `version`, bump `CACHE` in `sw.js`, push. On the phone, **Settings → Merge latest content** adds the new steps and refreshes guides on steps you have not edited, keeping all progress.
+
+## Sync and daily briefs
+
+**Settings → Sync** saves your progress to one private GitHub repository (`data/state.json`) every few seconds after a change, and pulls a newer copy when the app opens. It needs an empty private repo (for example `walk-in-light-data`) and a fine-grained personal access token with *Contents: Read and write* on that repo only. The token is stored on the phone and is stripped from the uploaded file and from exports.
+
+With sync on, scheduled Claude sessions read that file and push a three-line brief to your phone: yesterday's completed steps, today's task, and a verse. The schedule lives in Claude's scheduled tasks, not in this repo.
 
 ## Reminders
 
